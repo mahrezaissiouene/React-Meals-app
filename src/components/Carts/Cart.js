@@ -12,7 +12,7 @@ import classes from "./Cart.module.css";
   );
 
   return (
-    <Modal>
+    <Modal onhidecart={props.onhidecart} >
       {cartItems}
       <div className={classes.total}>
         <span>Total Amount </span>
