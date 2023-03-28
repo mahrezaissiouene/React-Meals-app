@@ -1,7 +1,8 @@
 import React from "react";
+import Modal from "../UI/Modal";
 import classes from "./Cart.module.css";
 
-export const Cart = () => {
+ const Cart = () => {
   const cartItems = (
     <ul className={classes["cart-items"]}>
       {[{ id: "C1", name: "Sushi", amount: 2, price: 12.99 }].map((item) => (
@@ -11,7 +12,7 @@ export const Cart = () => {
   );
 
   return (
-    <div>
+    <Modal>
       {cartItems}
       <div className={classes.total}>
         <span>Total Amount </span>
@@ -22,6 +23,8 @@ export const Cart = () => {
         <button className={classes["button--alt"]}>Close</button>
         <button className={classes.button}>Order</button>
       </div>
-    </div>
+    </Modal>
   );
 };
+
+export default Cart ;
