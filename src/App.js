@@ -18,13 +18,13 @@ function App() {
   
 
   return (
-    <CartProvider>
+    <CartProvider> 
     {cartIsshown &&  <Cart onhidecart={hidecartHandler} />} { /* if cartisshown then show cart */ }
       <Header onshowncart={showncartHandler} />
       <main>
         <Meals />
       </main>
-    </CartProvider>
+    </CartProvider> 
   );
 }
 
