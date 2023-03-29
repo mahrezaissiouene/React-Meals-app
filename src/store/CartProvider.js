@@ -33,6 +33,7 @@ function CartProvider(props) {
   const [cartState , dispatchCartAcion ] = useReducer(cartReducer , defaultCartState); { /* reducer function , initial value */ }
 
   const addItemTocartHandler = item => {
+
     dispatchCartAcion( {type : 'ADD_ITEM' , item : item } );
   };
 
@@ -42,8 +43,8 @@ function CartProvider(props) {
 
 
   const cartcontext = {
-    items: [],
-    totalAmount: 0,
+    items: cartState.items,
+    totalAmount: cartState.totalAmount,
     addItem: addItemTocartHandler,
     removeItem: removeItemFromcartHandler
   };
