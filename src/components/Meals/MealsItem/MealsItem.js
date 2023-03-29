@@ -16,7 +16,7 @@ function MealsItem(props) {
       amount : amount ,
       price : props.price
     });
-    console.log(props.id);
+
 
   }
 
