@@ -57,7 +57,7 @@ const Cart = (props) => {
   const submitOrderHandler = async (userData) => {
     setisSubmitting(true);
 
-    const response = await fetch(
+    await fetch(
       "https://react-meals-6a3c5-default-rtdb.firebaseio.com/orders.json",
       {
         method: "POST",
@@ -68,7 +68,20 @@ const Cart = (props) => {
       }
     );
     setisSubmitting(false);
+    setdidSubmit(true);
   };
+
+  const isSubmittingModalContent = <p>Sending order data ...</p>;
+  const didSubmitModalContent = (
+    <React.Fragment>
+      <p>Successfully sent the order!</p>
+      <div className={classes.actions}>
+      <button className={classes.button} onClick={props.onClose}>
+        Close
+      </button>
+    </div>
+    </React.Fragment>
+  );
 
   const cartModalContent = (
     <React.Fragment>
@@ -84,9 +97,13 @@ const Cart = (props) => {
       {!isCheckout && modalActions}
     </React.Fragment>
   );
-  return <Modal onhidecart={props.onhidecart}>
-    {cartModalContent}
-  </Modal>;
+
+  return <Modal onClose={props.onClose}>
+    {!isSubmitting && !didSubmit && cartModalContent}
+      {isSubmitting && isSubmittingModalContent}
+      {!isSubmitting && didSubmit && didSubmitModalContent}
+    
+    </Modal>;
 };
 
 export default Cart;
