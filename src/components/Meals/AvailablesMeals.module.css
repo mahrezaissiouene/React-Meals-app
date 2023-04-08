@@ -9,6 +9,12 @@
     color: white;
     text-align : center;
   }
+
+  .mealserror {
+    color: rgb(249, 66, 66);
+    text-align : center;
+  }
+
   .meals ul {
     list-style: none;
     margin: 0;
