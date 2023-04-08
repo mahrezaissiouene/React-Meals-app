@@ -7,6 +7,9 @@ import Checkout from "./Checkout";
 
 const Cart = (props) => {
   const [isCheckout, setIsCheckout] = useState(false);
+  const [isSubmitting, setisSubmitting] = useState(false);
+  const [didSubmit, setdidSubmit] = useState(false);
+
   const cartCtx = useContext(cartcontext);
 
   const totalAmount = cartCtx.totalAmount.toFixed(2);
@@ -51,18 +54,24 @@ const Cart = (props) => {
     </div>
   );
 
-  const submitOrderHandler = (userData) => {
-    fetch("https://react-meals-6a3c5-default-rtdb.firebaseio.com/orders.json", {
-      method: "POST",
-      body: JSON.stringify({
-        user: userData,
-        orderedItems: cartCtx.items,
-      }),
-    });
+  const submitOrderHandler = async (userData) => {
+    setisSubmitting(true);
+
+    const response = await fetch(
+      "https://react-meals-6a3c5-default-rtdb.firebaseio.com/orders.json",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          user: userData,
+          orderedItems: cartCtx.items,
+        }),
+      }
+    );
+    setisSubmitting(false);
   };
 
-  return (
-    <Modal onhidecart={props.onhidecart}>
+  const cartModalContent = (
+    <React.Fragment>
       {cartItems}
       <div className={classes.total}>
         <span> Total Amount </span>
@@ -73,8 +82,11 @@ const Cart = (props) => {
         <Checkout onConfirm={submitOrderHandler} onCancel={props.onClose} />
       )}
       {!isCheckout && modalActions}
-    </Modal>
+    </React.Fragment>
   );
+  return <Modal onhidecart={props.onhidecart}>
+    {cartModalContent}
+  </Modal>;
 };
 
 export default Cart;
