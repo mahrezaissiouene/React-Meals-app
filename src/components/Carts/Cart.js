@@ -1,4 +1,4 @@
-import React, { useContext , useState} from "react";
+import React, { useContext, useState } from "react";
 import cartcontext from "../../store/cartcontext";
 import Modal from "../UI/Modal";
 import classes from "./Cart.module.css";
@@ -17,8 +17,7 @@ const Cart = (props) => {
   };
 
   const cartitemAddHandler = (item) => {
-cartCtx.addItem( {...item , amount : 1} ) 
-
+    cartCtx.addItem({ ...item, amount: 1 });
   };
 
   const orderHandler = () => {
@@ -33,15 +32,15 @@ cartCtx.addItem( {...item , amount : 1} )
           name={item.name}
           amount={item.amount}
           price={item.price}
-          onRemove={cartitemRemoveHandler.bind(null , item.id) }
-          onAdd={cartitemAddHandler.bind(null , item)}
+          onRemove={cartitemRemoveHandler.bind(null, item.id)}
+          onAdd={cartitemAddHandler.bind(null, item)}
         />
       ))}
     </ul>
   );
   const modalActions = (
     <div className={classes.actions}>
-      <button className={classes['button--alt']} onClick={props.onClose}>
+      <button className={classes["button--alt"]} onClick={props.onClose}>
         Close
       </button>
       {hasitems && (
@@ -52,6 +51,16 @@ cartCtx.addItem( {...item , amount : 1} )
     </div>
   );
 
+  const submitOrderHandler = (userData) => {
+    fetch("https://react-meals-6a3c5-default-rtdb.firebaseio.com/orders.json", {
+      method: "POST",
+      body: JSON.stringify({
+        user: userData,
+        orderedItems: cartCtx.items,
+      }),
+    });
+  };
+
   return (
     <Modal onhidecart={props.onhidecart}>
       {cartItems}
@@ -60,9 +69,10 @@ cartCtx.addItem( {...item , amount : 1} )
         <span>$ {totalAmount}</span>
       </div>
 
-      {isCheckout && <Checkout onCancel={props.onClose} />}
+      {isCheckout && (
+        <Checkout onConfirm={submitOrderHandler} onCancel={props.onClose} />
+      )}
       {!isCheckout && modalActions}
-
     </Modal>
   );
 };
