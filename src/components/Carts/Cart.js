@@ -69,6 +69,7 @@ const Cart = (props) => {
     );
     setisSubmitting(false);
     setdidSubmit(true);
+    cartCtx.clearCart();
   };
 
   const isSubmittingModalContent = <p>Sending order data ...</p>;
